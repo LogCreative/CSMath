@@ -1,0 +1,54 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+% 大题
+\newenvironment{firstlayer}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}.\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{secondlayer}{\begin{list}{}{\renewcommand{\makelabel}[1]{(##1)\hfil}}}{\end{list}}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{(##1)\hfil}}}{\end{list}}
+
+% 标题
+\title{Project 1}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[1] The first problem
+    \begin{solution}
+        The answer.
+    \end{solution}
+\end{problems}
+
+\end{document}
