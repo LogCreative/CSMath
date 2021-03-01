@@ -1,0 +1,90 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{(##1)\hfil}}}{\end{list}}
+
+% 标题
+\title{Project 2}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[6] Some of the regions defined by n lines in the plane are infinite, while
+    others are bounded. What's the maximum possible number of bounded
+    regions?
+
+    \begin{solution}
+        The answer.
+    \end{solution}
+
+    \item[7] Let $H(n) = J(n + 1) - J(n)$. Equation (1.8) tells us that $H(2n) = 2$, and
+    $H(2n+1) = J(2n+2)-J(2n+1) = (2J(n+1)-1) -  (2J(n)+1)= 2H(n)-2$, for all $n > 1$. Therefore it seems possible to prove that $H(n) = 2$ for all $n$, by induction on $n$. What's wrong here?
+
+    \begin{solution}
+        
+    \end{solution}
+
+\end{problems}
+
+\noindent\textbf{Homework}
+
+\begin{problems}
+    \item[8] Solve the recurrence
+    $Q_0 = \alpha ; Q_1 = \beta ;$
+    $Q_n = (1 + Q_n-1)=Q_n-2 ; \text{for} n > 1.$
+    Assume that $Q_n \neq 0 \text{ for all } n \geq 0.$ \emph{Hint:} $Q_4 = (1 + \alpha)=\beta.$
+    \item[10] Let $Q_n$ be the minimum number of moves needed to transfer a tower of
+    $n$ disks from $A$ to $B$ if all moves must be clockwise |that is, from $A$
+    to $B$, or from $B$ to the other peg, or from the other peg to $A$. Also let Rn
+    be the minimum number of moves needed to go from $B$ back to $A$ under
+    this restriction. Prove that
+    \begin{equation*}
+            Q_n=\left\{
+                \begin{aligned}
+                    &0,&& \text{if } n=0;\\
+                    &2R_{n-1}+1,&&\text{if } n>0; 
+                \end{aligned}
+            \right.
+            R_n=\left\{
+                \begin{aligned}
+                &0,&&\text{if } n=0;\\
+                &Q_n=Q_{n-1}+1,&&\text{if } n>0 
+            \end{aligned}
+                \right.
+    \end{equation*}
+
+    (You need not solve these recurrences; we'll see how to do that in Chapter
+7.)
+\end{problems}
+
+\end{document}
