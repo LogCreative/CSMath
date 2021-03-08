@@ -1,0 +1,19 @@
+\begin{tikzpicture}[scale = \scalenum, every node/.style={scale = \scalenum}]
+\tikzstyle{largestone} = [minimum width=3cm,minimum height=0.5cm,draw,fill=white,font=\scriptsize];
+\tikzstyle{smallerpile} = [minimum width=2cm,minimum height=2.5cm,draw,text width=2cm,text centered,fill=white,font=\scriptsize];
+\tikzstyle{tray} = [gray!50];
+\tikzstyle{peg} = [fill=gray!50,minimum width=0.1cm,minimum height=6cm];
+
+\filldraw[tray]   (-7.5,0) rectangle (8,0.25);
+\node[tray] at (-4,-0.5) {$A$};
+\node [tray] at (0.5,-0.5) {$T$};
+\node [tray] at (5,-0.5) {$B$};
+\node [peg] at (-4,3) {};
+\node [peg] at (0.5,3) {};
+\node [peg] at (5,3) {};
+
+\node [largestone] at (5,1) {$2n$};
+\node [largestone] at (5,0.5) {$2n-1$};
+\node [smallerpile] at (5,2.5) {$n-1$ size groups};
+
+\end{tikzpicture}

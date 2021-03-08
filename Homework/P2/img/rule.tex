@@ -1,0 +1,19 @@
+\begin{tikzpicture}[every node/.style={draw,fill=white,minimum size=0.5cm}]
+\node (v1) at (-4,1.5) {$A$};
+\node (v3) at (-2.5,1.5) {$T$};
+\node (v2) at (-1,1.5) {$B$};
+
+\draw[->] (v1) -- (-4,2.5) -- (-1,2.5) -- (v2);
+\draw[->]  (v2) edge (v3);
+\draw[->]  (v3) edge (v1);
+\node[draw=none] at (0.8,2) {$\Rightarrow$};
+%\node[draw=none]  (v7) at (3.4,2) {$\circlearrowright$};
+%\draw  (v7) ellipse (1.2 and 1.2);
+\node (v4) at (2.3,2.5) {$A$};
+\node (v5) at (4.5,2.5) {$B$};
+\node (v6) at (3.4,0.8) {$T$};
+
+\draw[->]  (v4) edge (v5);
+\draw[->]  (v5) edge (v6);
+\draw[->]  (v6) edge (v4);
+\end{tikzpicture}

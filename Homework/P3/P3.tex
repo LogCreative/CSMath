@@ -1,0 +1,167 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 3}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Homework}
+
+\begin{problems}
+    \item[9] Sometimes it's possible to use induction backwards, proving things from
+    $n$ to $n - 1$ instead of vice versa! For example, consider the statement
+    \begin{equation*}
+        P(n):\quad x_1\cdots x_n \leq \left(\frac{x_1+\cdots+x_n}{n}\right)^n, \text{ if } x_1,\cdots,x_n\geq 0
+    \end{equation*}
+    This is true when $n=2$, since $(x_1+x_2)^2-4x_1x_2=(x_1-x_2)^2\geq 0$.
+        \begin{steps}
+            \item[a] By setting $x_n = (x_1+\cdots+x_{n-1})/(n - 1)$, prove that $P(n)$ implies
+            $P(n - 1)$ whenever $n > 1$.
+            \item[b] Show that $P(n)$ and $P(2)$ imply $P(2n)$.
+            \item[c] Explain why this implies the truth of $P(n)$ for all $n$. 
+        \end{steps}
+    \begin{solution}
+
+        \begin{steps}
+            \item[a] if $P(n)$ holds, then set $x_n=\frac{(x_1+\cdots+x_{n-1})}{n-1}\geq 0$, the statement could become:
+            \begin{align*}
+                0&\leq \left(\frac{x_1+\cdots+x_{n-1}+\frac{(x_1+\cdots+x_{n-1})}{n-1}}{n}\right)^n - x_1\cdots x_{n-1}\frac{x_1+\cdots+x_{n-1}}{n-1}\\
+                &= \left(\frac{x_1+\cdots+x_{n-1}}{n-1}\right)^n- x_1\cdots x_{n-1}\left(\frac{x_1+\cdots+x_{n-1}}{n-1}\right)\\
+                &= \frac{x_1+\cdots+x_{n-1}}{n-1} \left[\left(\frac{x_1+\cdots+x_{n-1}}{n-1}\right)^{n-1}-x_1\cdots x_{n-1}\right]\\
+                &=x_n\left[\left(\frac{x_1+\cdots+x_{n-1}}{n-1}\right)^{n-1}-x_1\cdots x_{n-1}\right]
+            \end{align*}
+            Due to $x_n\geq 0$, then
+            \begin{equation*}
+                x_1\cdots x_{n-1}\leq \left(\frac{x_1+\cdots+x_{n-1}}{n-1}\right)^{n-1}
+            \end{equation*}
+            which follows that $P(n-1)$ holds.
+            \item[b] 
+            Group the product of $2n$ elements into two groups and apply $P(n)$ on each group, then 
+            \begin{equation*}
+                (x_1x_2\cdots x_{n})(x_{n+1}x_{n+2}\cdots x_{2n})\leq \left(\frac{x_1+\cdots+x_n}{n}\right)^n \left(\frac{x_{n+1}+\cdots+x_{2n}}{n}\right)^n
+            \end{equation*} 
+            Now, the two elements $\frac{x_1+\cdots+x_n}{n}$ and $\frac{x_{n+1}+\cdots+x_{2n}}{n}$ are greater than or equal to 0, so apply $P(2)$ here:
+            \begin{equation*}
+                \frac{x_1+\cdots+x_n}{n} \frac{x_{n+1}+\cdots+x_{2n}}{n} \leq \left(\frac{\frac{x_1+\cdots+x_n}{n}+\frac{x_{n+1}+\cdots+x_{2n}}{n}}{2}\right)^2 = \left(\frac{x_1+\cdots+x_{2n}}{2n}\right)^2
+            \end{equation*}
+            So, $P(2n)$ holds as the deduction followed:
+            \begin{equation*}
+                x_1x_2\cdots x_{2n} \leq \left( \frac{x_1+\cdots+x_n}{n} \frac{x_{n+1}+\cdots+x_{2n}}{n}\right)^n \leq \left(\frac{x_1+\cdots+x_{2n}}{2n}\right)^{2n}
+            \end{equation*} 
+            \item[c] Because the basic step $P(2)$ holds and then $P(2^2), P(2^3), \cdots, P(2^k)$ will hold for any $k\in \mathbb{N}^+$ to the infinity according to sub-problem \textbf{b}. For each divided section, because $P(n)$ will indicate $P(n-1)$, then it will hold for any sub division. So, $P(n)$ holds for any $n\in \mathbb{N}^+$.
+        \end{steps}
+    \end{solution}
+    \item[11] A Double Tower of Hanoi contains $2n$ disks of $n$ different sizes, two of
+    each size. As usual, we're required to move only one disk at a time,
+    without putting a larger one over a smaller one.
+        \begin{steps}
+            \item[a] How many moves does it take to transfer a double tower from one
+            peg to another, if disks of equal size are indistinguishable from each
+            other?
+            \item[b] What if we are required to reproduce the original top-to-bottom
+            order of all the equal-size disks in the final arrangement? [Hint:
+            This is diffcult -- it's really a ``bonus problem''.]
+        \end{steps}
+    \begin{solution}
+        \begin{steps}
+            \item[a] It is still the same for regarding the two disks of equal size to be one disk group and perform the original Hanoi Tower problem, beacuse disks of equal size are indistinguishable from each other and the limitation stays the same on size requirement. Except that to make the disk group in size, the move expected is two instead of one.
+            
+            The recurrence is shown as follows:
+            \begin{align*}
+                X(0) &= 0 \\
+                X(n) &= 2X(n-1) + 2 && n\geq 1
+            \end{align*} 
+            which shows that change the size of disk group will only effect on the bias, without changing the coefficient of the previous iteration. Because you have to move the $(n-1)$ disk groups onto the middle peg, and then move the biggest disk group to peg $B$, then complete the movement through moving the $(n-1)$ disk groups in place.
+
+            The last one follows when $n\geq 1$:
+            \begin{align*}
+                X(n) + 2 &= 2\left[X(n-1)+2\right]\\
+                X(n) + 2 &= 2^{n+1}\\
+                X(n)     &= 2^{n+1} - 2
+            \end{align*}
+
+            The closed formula is
+            \begin{equation*}
+                X(n) = \left\{\begin{aligned}
+                    &0,&&n=0\\
+                    &2^{n+1}-2,&&n\geq 1
+                \end{aligned}\right.
+            \end{equation*}
+
+            \item[b] Now, because the disks in the same size group are distinguishable, label the disks in the original arrangement from top to bottom. And investigate the previous moving again, shown in Figrue \ref{fig:x}.
+            
+            To move the largest pile, we have to move all the remaining disks to the middle peg, then move the largest two disks in an reverse order, finally move the disks on the middle peg to the peg $B$. It's the minimum movement if order is negelected.
+
+            \providecommand{\scalenum}{0.55}
+            \begin{figure}
+                \subfigure[original state]{\input{img/X1.tex}}
+                \subfigure[move $n-1$ size groups to $T$]{\input{img/X2.tex}}
+                \subfigure[move $2n-1$ to $B$]{\input{img/X3.tex}}
+                \subfigure[move $2n$ to $B$]{\input{img/X4.tex}}
+                \subfigure[move $n-1$ size groups to $B$]{\input{img/X5.tex}}
+                \caption{Movement solution without considering label}
+                \label{fig:x}
+            \end{figure}
+            
+            In this solution, the following context will show that the $n-1$ size groups will be the same order as the original arrangement. Because of the limitation over the size, the order between the size group maintains the same. \textbf{Every movement on the size group will cause the order of inner disks flipped.} As the movement on the size group must be an even number, because the same operation on the $n-1$ size groups as a whole \textbf{is performed twice}. So the order in the $n-1$ will be maintained.
+
+            \begin{figure}[h]
+                \subfigure[Original state]{\input{img/Y1.tex}}
+                \subfigure[Move $n-1$ size groups to $B$]{\input{img/Y2.tex}}
+                \subfigure[Move $2n-1$ to $T$]{\input{img/Y3.tex}}
+                \subfigure[Move $n-1$ size groups to $T$]{\input{img/Y4.tex}\label{y4}}
+                \subfigure[Move $2n$ to $B$]{\input{img/Y5.tex}\label{y5}}
+                \subfigure[Move $n-1$ size groups to $A$]{\input{img/Y6.tex}\label{y6}}
+                \subfigure[Move $2n-1$ to $B$]{\input{img/Y7.tex}}
+                \subfigure[Move $n-1$ size groups to $B$]{\input{img/Y8.tex}}
+                \caption{Movement solution considering label}
+            \end{figure}
+
+            Now, back to the second sub problem. To make it the fastest way of arranging the disks in the original order, the bottom one needs to be considered first. Then, every other disks need to be in the middle peg in \ref{y4}. Then, move the bottom one in \ref{y5}. In order to move the $2n-1$, the $n-1$ size groups must be moved first only to the empty peg $A$ in \ref{y6}. Then, everything could be placed properly to the final state. This process is now shown to be the fastest.
+
+            Because the $n-1$ size groups is overall moved 4 times, similarly, the order inside will not change. So the configuration is the right one.
+
+            The number of moves is:
+            \begin{equation*}
+                Y(n) = 4X(n-1) + 3 = 2^{n+2} - 5
+            \end{equation*}
+
+
+        \end{steps}
+    \end{solution}
+\end{problems}
+
+\end{document}
