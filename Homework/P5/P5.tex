@@ -1,0 +1,165 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 5}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+
+    \item[6] What is the value of $\sum_k [1\leq j \leq k \leq n]$, as a function of $j$ and $n$? 
+    \begin{solution}
+        \begin{equation*}
+        \sum_k [1\leq j \leq k \leq n](j,n) = \left\{\begin{aligned}
+            &0, &&j>n\text{ or }j<1,\\
+            &n-j+1, &&\text{else.}
+        \end{aligned}\right.
+        \end{equation*}
+    \end{solution}
+    
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+    \item[11] The general rule (2.56) for summation by parts is equivalent to
+    
+    $$
+    \sum_{0\leq k <n}(a_{k+1}-a_k)b_k = a_n b_n - a_0 b_0 - \sum_{0\leq k <n}a_{k+1}(b_{k+1}-b_k),\quad \text{for }n\geq 0
+    $$
+
+    
+    Prove this formula directly by  using the distributive, associative, and commutative laws.
+
+    \begin{proof}
+        \begin{align*}
+            \sum_{0\leq k <n}(a_{k+1}-a_k)b_k &= \sum_{0\leq k <n} a_{k+1}b_k - \sum_{0\leq k <n} a_kb_k &&\text{(associative law)}\\
+            &=\sum_{0\leq k <n} a_{k+1}b_k - \sum_{-1\leq k <n-1} a_{k+1}b_{k+1} &&\text{(commutative law)}\\
+            &=\sum_{0\leq k <n} a_{k+1}b_k - \left(\sum_{0\leq k <n} a_{k+1}b_{k+1} + a_0b_0 -a_nb_n \right)&&\text{(commutative law)}\\
+            &= a_nb_n - a_0b_0 +\sum_{0\leq k <n} a_{k+1}b_k - \sum_{0\leq k <n} a_{k+1}b_{k+1} \\
+            &= a_nb_n - a_0b_0 + \sum_{0\leq k <n}a_{k+1}(b_{k+1}-b_k) &&\text{(distributive law)}
+        \end{align*}
+        
+    \end{proof}
+
+    \item[12] Show that the function $p(k) =k+ (-1)^kc$ is a permutation of the set of all integers, whenever $c$ is an integer.
+    \begin{proof}
+        Assume $p(k)=n$, then
+        \begin{equation*}
+            n+c=k+\left((-1)^k + 1\right)c
+        \end{equation*}
+        By beging the index of $-1$,
+        \begin{equation*}
+            (-1)^{n+c} = (-1)^{k+\left((-1)^k+1\right)c}
+        \end{equation*}
+        because $\left((-1)^k+1\right)$ is always even, thus
+        \begin{equation*}
+            (-1)^{n+c} = (-1)^k
+        \end{equation*}
+        So, plug $k=n-(-1)^kc=n-(-1)^{n+c}c$ back to $p(k)$
+        \begin{equation*}
+            p(k)=n-(-1)^kc+(-1)^kc=n
+        \end{equation*}
+        So a given $n$, there is always $k=(-1)^{n+c}c$ such that $p(k)=n$. Because this is a surjective function, $k$'s are unique (otherwise it is not a funciton). It is avaliable for all integers, thus $k$'s will expand to all integers and $p(k)$ is a bijective. Thus, $p(k)$ is a permutation of the set of all integers.
+    \end{proof} 
+    \item[13] Use the repertoire method to find a closed form for $\sum_{k=0}^n (-1)^kk^2$.
+    \begin{solution}
+        Consider the recurrence of 
+        \begin{align*}
+            R_0&=\alpha\\
+            R_n&=R_{n-1}+(-1)^n(\beta+ n\gamma+ n^2\delta)
+        \end{align*}
+        follows a closed form of
+        \begin{equation*}
+            R(n) = A(n)\alpha + B(n)\beta + C(n)\gamma + D(n)\delta
+        \end{equation*}
+        \begin{description}
+            \item[Case 1: $R(n)=1$]
+            \begin{align*}
+                1&=\alpha\\
+                1&=1+(-1)^n(\beta+n\gamma+n^2\delta)
+            \end{align*} 
+            follows $\beta = \gamma =\delta = 0$.
+            \begin{equation*}
+                A(n)=1
+            \end{equation*}
+            \item[Case 2: $R(n)=(-1)^n$]
+            \begin{align*}
+                1&=\alpha\\
+                (-1)^n&=(-1)^{n-1}+(-1)^n(\beta+n\gamma+n^2\delta)\\
+                2\times(-1)^n&=(-1)^n(\beta+n\gamma+n^2\delta)
+            \end{align*} 
+            follows $\beta=2,\gamma=\delta=0$
+            \begin{align*}
+                (-1)^n&=1+2B(n)\\
+                B(n)&=\frac{(-1)^n -1}{2}
+            \end{align*}
+            \item[Case 3: $R(n)=(-1)^nn$]
+            \begin{align*}
+                0&=\alpha\\
+                (-1)^nn&=(-1)^{n-1}(n-1)+(-1)^n(\beta+n\gamma+n^2\delta)\\
+                (-1)^n(2n-1)&=(-1)^n(\beta+n\gamma+n^2\delta)
+            \end{align*}
+            follows $\beta=-1,\gamma=2,\delta = 0$
+            \begin{align*}
+                (-1)^nn&=-B(n)+2C(n)\\
+                C(n)&=\frac{2(-1)^nn+(-1)^n-1}{4}
+            \end{align*}
+            \item[Case 4: $R(n)=(-1)^nn^2$]
+            \begin{align*}
+                0&=\alpha\\
+                (-1)^nn^2&=(-1)^{n-1}(n-1)^2+(-1)^n(\beta+n\gamma+n^2\delta)\\
+                (-1)^n(2n^2-2n+1)&=(-1)^n(\beta+n\gamma+n^2\delta)
+            \end{align*} 
+            follows $\beta=1,\gamma=-2,\delta=2$
+            \begin{align*}
+                (-1)^nn^2&=B(n)-2C(n)+2D(n)\\
+                (-1)^nn^2&=\frac{(-1)^n -1}{2}-2\frac{2(-1)^nn+(-1)^n-1}{4}+2D(n)\\
+                D(n)&=\frac{(-1)^n}{2}(n^2+n)
+            \end{align*}
+        \end{description}
+        In this problem, $\alpha=0,\beta=0,\gamma=0,\delta=1$,thus
+        \begin{align*}
+            \sum_{k=0}^n (-1)^kk^2
+            &=D(n)\\
+            &=\frac{(-1)^n}{2}(n^2+n)
+        \end{align*}
+    \end{solution}
+\end{problems}
+
+\end{document}
