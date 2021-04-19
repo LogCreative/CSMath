@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 7}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[1] When we analyzed the Josephus problem in Chapter 1, we represented an arbitrary positive integer $n$ in the form $n=2^m+l$, where $0\leq l < 2^m$. Give explicit formulas for $l$ and $m$ as functions of $n$, using floor and/or ceiling brackets.
+    \begin{solution}
+        \begin{align*}
+            m &= \lfloor \log_2 n \rfloor\\
+            l &= n - 2^{\lfloor \log_2 n\rfloor}
+        \end{align*}  
+    \end{solution} 
+    
+    \item[2] What is a formula for the nearest integer to a given real number $x$? In case of ties, when $x$ is exactly halfway between two integers, give an expression that rounds (a) up -- that is, to $\lceil x\rceil$; (b) down -- that is, to $\lfloor x\rfloor$.
+    
+    \begin{solution}
+        Let \fbox{$x$} be the nearest integer for real number $x$. It is either $\lfloor x\rfloor$ or $\lceil x \rceil$, which is decided by comparing $x-\lfloor x\rfloor$ and $\lceil x \rceil-x$.
+        \begin{description}
+            \item[Case (a): rounds up] 
+            Because
+            \begin{equation*}
+                \frac{\lfloor x\rfloor+\lceil x\rceil}{2}=\frac{2\lceil x\rceil-1}{2} = \lceil x\rceil - \frac{1}{2}
+            \end{equation*} 
+            \begin{align*}
+                \fbox{$x$} = \left\{\begin{aligned}
+                    &\lceil x\rceil,&& x\geq\frac{\lfloor x\rfloor+\lceil x\rceil}{2},\\
+                    &\lfloor x \rfloor,&&x<\frac{\lfloor x\rfloor+\lceil x\rceil}{2}
+                \end{aligned}\right\}&= \left\{\begin{aligned}
+                    &\lceil x\rceil,&&x+\frac{1}{2}\geq\lceil x\rceil ,\\
+                    &\lfloor x \rfloor,&&x+\frac{1}{2}<\lceil x\rceil
+                \end{aligned}\right\}\\&= \left\{\begin{aligned}
+                    &\lceil x\rceil,&&\lceil x\rceil+1> x+\frac{1}{2}\geq\lceil x\rceil ,\\
+                    &\lfloor x \rfloor,&&\lfloor x \rfloor\leq x+\frac{1}{2}<\lceil x\rceil
+                \end{aligned}\right\}=\left\lfloor x + \frac{1}{2}\right\rfloor
+            \end{align*} 
+            \item[Case (b): rounds down]
+            Because
+            \begin{equation*}
+                \frac{\lfloor x\rfloor+\lceil x\rceil}{2}=\frac{2\lfloor x\rfloor+1}{2} = \lfloor x\rfloor + \frac{1}{2}
+            \end{equation*}
+            \begin{align*}
+                \fbox{$x$} = \left\{\begin{aligned}
+                    &\lceil x\rceil,&& x>\frac{\lfloor x\rfloor+\lceil x\rceil}{2},\\
+                    &\lfloor x \rfloor,&&x\leq\frac{\lfloor x\rfloor+\lceil x\rceil}{2}
+                \end{aligned}\right\}&=\left\{\begin{aligned}
+                    &\lceil x\rceil,&&x-\frac{1}{2}>\lfloor x \rfloor,\\
+                    &\lfloor x \rfloor,&&x-\frac{1}{2}\leq\lfloor x \rfloor
+                \end{aligned}\right\}\\&=\left\{\begin{aligned}
+                    &\lceil x\rceil,&&\lceil x\rceil\geq x-\frac{1}{2}>\lfloor x \rfloor,\\
+                    &\lfloor x \rfloor,&&\lfloor x \rfloor-1<x-\frac{1}{2}\leq\lfloor x \rfloor
+                \end{aligned}\right\}=\left\lceil x-\frac{1}{2}\right\rceil
+            \end{align*} 
+        \end{description}
+    \end{solution}
+    \item[3] Evaluate $\left\lfloor \lfloor m\alpha\rfloor n/\alpha \right\rfloor$, when $m$ and $n$ are positive integers and $\alpha$ is an irrational number greater than $n$.
+    
+    \begin{solution}
+        \begin{equation*}
+            \left\lfloor \frac{\lfloor m\alpha \rfloor n}{\alpha} \right\rfloor< \left\lfloor \frac{m\alpha n}{\alpha} \right\rfloor = \lfloor mn \rfloor = mn
+        \end{equation*}
+        In fact,
+        \begin{equation*}
+            \left\lfloor \frac{\lfloor m\alpha \rfloor n}{\alpha} \right\rfloor = \left\lfloor \frac{ (m\alpha - \{m\alpha\}) n}{\alpha} \right\rfloor =\left\lfloor mn - \frac{\{m\alpha\}n}{\alpha} \right\rfloor = mn - 1
+        \end{equation*}
+        because
+        \begin{equation*}
+            \{m\alpha\}\frac{n}{\alpha}<1\times 1 = 1
+        \end{equation*}
+    \end{solution}
+    \item[4] The  text  describes  problems  at  levels  1  through  5.   What  is  a  level  0 problem?  (This, by the way, is not a level 0 problem.)
+    
+    \textbf{Answer.} Something doesn't need any proof, just a guess or an a conjecture.
+    \item[5]  Find a necessary and sufficient condition that $\lfloor nx\rfloor=n\lfloor x\rfloor$, when $n$ is a positive integer.  (Your condition should involve $\{x\}$.)
+    \begin{solution}
+        \begin{equation*}
+            x = \lfloor x\rfloor + \{x\}
+        \end{equation*}
+        Then,
+        \begin{equation*}
+            \lfloor nx \rfloor = \lfloor n\lfloor x\rfloor +n\{x\}\rfloor = n\lfloor x \rfloor + \lfloor n\{x\}\rfloor
+        \end{equation*}
+        Thus, $\lfloor nx \rfloor =n\lfloor x\rfloor$ holds when
+        \begin{equation*}
+            n\{x\}<1 \Leftrightarrow \{x\}<\frac{1}{n}
+        \end{equation*}
+        where $n\in \mathbb{N}_+$.
+    \end{solution} 
+\end{problems}
+
+\end{document}

@@ -1,0 +1,75 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 8}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[6] Can something interesting be said about $\lfloor f(x)\rfloor$ when $f(x)$ is a continuous, monotonically \emph{decreasing} function that takes integer values only when $x$ is an integer?
+    \item[7] Solve the recurrence
+    \begin{align*}
+        X_n&=n,&&\text{for }0\leq n<m\;\\
+        X_n&=X_{n-m}+1,&&\text{for }n\geq m.
+    \end{align*} 
+    \item[8] Prove the \emph{Dirichlet box} principle:  If $n$ objects are put into $m$ boxes, some box must contain $\geq \lceil n/m\rceil$ objects, and some box must contain $\leq \lfloor n/m\rfloor$.
+    \item[9] Egyptian mathematicians in 1800 \textsc{b.c.} represented rational numbers between 0 and 1 as sums of unit fractions $1/x_1+\cdots+1/x_k$, where the $x$'s were distinct positive integers.  For example, they wrote $1/3+1/15$ instead of $2/5$.  Prove that it is always possible to do this in a systematic way:  If $0 < m/n < 1$, then
+    \begin{equation*}
+        \frac{m}{n} =\frac{1}{q} + \left\{\text{representation of }\frac{m}{n}-\frac{1}{q}\right\},\quad q=\left\lceil\frac{n}{m}\right\rceil
+    \end{equation*} 
+    (This is \emph{Fibonacci's algorithm}, due to Leonardo Fibonacci, \textsc{a.d.} 1202.)
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+    \item[10]Show that the expression
+    \begin{equation*}
+        \left\lceil\frac{2x+1}{2}\right\rceil - \left\lceil\frac{2x+1}{4}\right\rceil + \left\lfloor\frac{2x+1}{4}\right\rfloor
+    \end{equation*} 
+    is always either $\lfloor x \rfloor$ or $\lceil x \rceil$. In what circumstances does each case arise?
+    \item[11] Give details of the proof alluded to in the text,  that the open interval$(\alpha .. \alpha)$contains exactly $\lceil \beta\rceil-\lfloor \alpha\rfloor-1$ integers when $\alpha < \beta$.  Why doesthe case $\alpha=\beta$ have to be excluded in order to make the proof correct?
+    \item[12]Prove that
+    \begin{equation*}
+        \left\lceil \frac{n}{m}\right\rceil = \left\lfloor\frac{n+m-1}{m}\right\rfloor
+    \end{equation*} 
+    for  all  integers $n$ and  all  positive  integers $m$.   [This  identity  gives  usanother way to convert ceilings to floors and vice versa, instead of using the reflective law (3.4).]
+    \item[13]  Let $\alpha$ and $\beta$ be positive real numbers.  Prove that Spec($\alpha$) and Spec($\beta$) partition the positive integers if and only if $\alpha$ and $\beta$ are irrational and $1/\alpha+1/\beta=1$.
+\end{problems}
+
+\end{document}

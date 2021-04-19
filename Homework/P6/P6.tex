@@ -1,0 +1,111 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 6}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+
+    \item[7] Let $\nabla f(x)=f(x)-f(x-1)$. What is $\nabla (x^{\overline{m}})$?
+    \begin{solution} 
+    \begin{align*}
+        \nabla (x^{\overline{m}}) &= \nabla (x(x+1)\cdots(x+m-1))\\
+        &=x(x+1)\cdots(x+m-1) - (x-1)x\cdots(x+m-2)\\
+        &=x(x+1)\cdots(x+m-2)\left[(x+m-1)-(x-1)\right]\\
+        &=mx^{\overline{m-1}}
+    \end{align*} 
+    \end{solution}
+    \item[8] What is the value of $0^{\underline{m}}$, when $m$ is a given integer?
+    \begin{solution}
+        \begin{description}
+            \item[Case 1: $m>0$.]  \begin{equation*}
+                0^{\underline{m}} = 0\cdot (-1)^{\underline{m-1}} = 0
+            \end{equation*}
+            \item[Case 2: $m=0$.] \begin{equation*}
+                0^{\underline{0}} = 1
+            \end{equation*}
+            which is defined as the empty product.
+            \item[Case 3: $m<0$.] \begin{align*}
+                1 = 0^{\underline{0}} &= 0^{\underline{m}}(-m)^{\underline{-m}} = 0^{\underline{m}}|m|!\\
+                0^{\underline{m}}&=\frac{1}{|m|!}
+            \end{align*}
+        \end{description}
+    \end{solution} 
+    \item[9] What  is  the  law  of  exponents  for  rising  factorial  powers,  analogous  to (2.52)? Use this to define $x^{\overline{-n}}$.
+    \begin{solution}
+        \begin{equation*}
+            x^{\overline{m+n}} = x(x+1)\cdots(x+m-1)\cdots(x+m)\cdots(x+m+n-1) = x^{\overline{m}}(x+m)^{\overline{n}}
+        \end{equation*}
+        \begin{equation*}
+            1 = x^{\overline{0}}= x^{\overline{(-n)+n}} = x^{\overline{-n}}(x-n)^{\overline{n}}
+        \end{equation*}
+        \begin{equation*}
+            x^{\overline{-n}} = \frac{1}{(x-n)^{\overline{n}}} = \frac{1}{(x-n)(x-n+1)\cdots(x-1)}
+        \end{equation*}
+    \end{solution} 
+    \item[10] The text derives the following formula for the difference of a product:
+    \begin{equation*}
+        \Delta(uv) = u\Delta v + Ev\Delta u
+    \end{equation*}
+    How can this formula be correct, when the left-hand side is symmetric with respect to $u$ and $v$ but the right-hand side is not?
+    \begin{solution}
+        Because the following formula could also be correct with tht respect of $u$:
+        \begin{align*}
+            \Delta(uv) &= u(x+1)v(x+1) - u(x)v(x)\\
+            &=u(x+1)v(x+1) - u(x+1)v(x) + u(x+1)v(x) - u(x)v(x)\\
+            &=u(x+1)\Delta v + v\Delta u\\
+            &=Eu\Delta v + v\Delta u
+        \end{align*}
+        It is an inner layer of symmetric.
+        \begin{equation*}
+            Eu\Delta v + v\Delta u = u\Delta v + Ev\Delta u
+        \end{equation*}
+    \end{solution}
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+    \item[14] Evaluate $\sum_{k=1}^n 2^k$ by rewriting it as the multiple sum $\sum_{1\leq j \leq k\leq n}2^k$.
+    \begin{align*}
+        \sum_{1\leq j \leq k\leq n}2^k &= \sum_{1\leq j\leq n}\sum_{j\leq k\leq n}2^k \\&= \sum_{1\leq j\leq n}\left[(2^1+2^2+\cdots+2^n) - (2^1+2^2+\cdots +2^{j-1})\right] \\&= \sum_{1\leq j\leq n}\left[(2^{n+1}-2)-(2^j-2)\right] \\&= n2^{n+1}-(2^{n+1}-2)
+    \end{align*} 
+\end{problems}
+
+\end{document}
