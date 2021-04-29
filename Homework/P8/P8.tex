@@ -31,7 +31,7 @@
 \newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
 
 % 标题
-\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 8}
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 9}
 \author{Zilong Li\\\small Student ID: 518070910095}
 \date{\today}
 
@@ -42,17 +42,143 @@
 
 \begin{problems}
     \item[6] Can something interesting be said about $\lfloor f(x)\rfloor$ when $f(x)$ is a continuous, monotonically \emph{decreasing} function that takes integer values only when $x$ is an integer?
+    \begin{solution}
+        \begin{equation}\label{eq:p6}
+            \begin{aligned}
+            \lfloor f(x)\rfloor &=\lfloor f(\lceil x\rceil)\rfloor\\
+            \lceil f(x) \rceil &= \lceil f(\lfloor x \rfloor)\rceil
+            \end{aligned}
+        \end{equation}
+        where $f(x)$, $f(\lfloor x\rfloor)$, $f(\lceil x\rceil)$ are defined. Because $f(x)$ is a continuous, monotonically decreasing function, $-f(x)$ is a continuous, monotonically increasing function. Then plug $-f$ to the increasing properties:
+        \begin{align*}
+            \lfloor -f(x) \rfloor &= \lfloor -f(\lfloor x\rfloor)\rfloor\\
+            \lceil -f(x) \rceil &=\lceil -f(\lceil x\rceil)\rceil
+        \end{align*}
+        By applying $\lfloor -x \rfloor=-\lceil x\rceil$ and $\lceil -x \rceil=-\lfloor x\rfloor$,
+        \begin{align*}
+            -\lceil f(x) \rceil &= -\lceil f(\lfloor x\rfloor)\rceil\\
+            -\lfloor f(x) \rfloor &=-\lfloor f(\lceil x\rceil)\rfloor
+        \end{align*}
+        which is the same as Equations \eqref{eq:p6}.
+    \end{solution} 
     \item[7] Solve the recurrence
     \begin{align*}
         X_n&=n,&&\text{for }0\leq n<m\;\\
         X_n&=X_{n-m}+1,&&\text{for }n\geq m.
     \end{align*} 
+    \begin{solution}
+        Then closed formula is
+        \begin{equation}\label{eq:p7}
+            X_n = (n\mod{m}) + \left\lfloor \frac{n}{m}\right\rfloor,\quad\text{for }n\in \mathbb{N}
+        \end{equation}
+        % Prove this by mathematical induction. $X_0=(0\mod{m})+\lfloor 0\rfloor =0$ is true for the basic step. Assume $X_n=(n\mod{m})+\lfloor n/m\rfloor$ is hold for all $0\leq k\leq n$, then 
+        Prove by discussing different scenarios.
+        \begin{description}
+            \item[Case 1: $n<m$.] $X_{n}=n=n+\lfloor0\rfloor$ is true.
+            \item[Case 2: $n=m$.] $X_{n}=X_0+1=1$ is still hold for $X_{n}=0 + \lfloor 1\rfloor=1$.
+            \item[Case 3: $n>m$.] $X_{n}=X_{n-m}+1=X_{n-2m}+2=\cdots=X_{n-lm}+l=n-lm+l$ when $n-lm<m\Rightarrow \frac{n}{m} \geq l>\frac{n}{m}-1$. i.e., $l=\lfloor \frac{n}{m}\rfloor$. Thus, 
+            \begin{equation*}
+                X_n = n - \left\lfloor \frac{n}{m}\right\rfloor m + \left\lfloor \frac{n}{m}\right\rfloor = (n\mod{m}) + \left\lfloor \frac{n}{m}\right\rfloor
+            \end{equation*}
+            where $ n - \left\lfloor \frac{n}{m}\right\rfloor m=(n\mod{m})$ is a definition.
+        \end{description}
+        Thus, Equation \eqref{eq:p7} is true for all $n\in \mathbb{N}$.
+    \end{solution}
     \item[8] Prove the \emph{Dirichlet box} principle:  If $n$ objects are put into $m$ boxes, some box must contain $\geq \lceil n/m\rceil$ objects, and some box must contain $\leq \lfloor n/m\rfloor$.
+    \begin{proof}
+        \textbf{Prove by contradition.} If all boxes contain $< \lceil n/m \rceil$, then the total number of objects
+        \begin{equation*}
+            n \leq m\left(\left\lceil \frac{n}{m} \right\rceil - 1\right) \Leftrightarrow \frac{n}{m} + 1\leq \left\lceil \frac{n}{m} \right\rceil
+        \end{equation*} 
+        which is impossible because $\lceil x\rceil<x+1$.
+        If all boxes contain $>\lfloor n/m \rfloor$, then
+        \begin{equation*}
+            n \geq m\left(\left\lfloor \frac{n}{m} \right\rfloor + 1\right) \Leftrightarrow \frac{n}{m} - 1 \geq \left\lfloor \frac{n}{m} \right\rfloor
+        \end{equation*}
+        which is also impossible because $\lfloor x\rfloor>x-1$.
+    \end{proof}
     \item[9] Egyptian mathematicians in 1800 \textsc{b.c.} represented rational numbers between 0 and 1 as sums of unit fractions $1/x_1+\cdots+1/x_k$, where the $x$'s were distinct positive integers.  For example, they wrote $1/3+1/15$ instead of $2/5$.  Prove that it is always possible to do this in a systematic way:  If $0 < m/n < 1$, then
     \begin{equation*}
         \frac{m}{n} =\frac{1}{q} + \left\{\text{representation of }\frac{m}{n}-\frac{1}{q}\right\},\quad q=\left\lceil\frac{n}{m}\right\rceil
     \end{equation*} 
     (This is \emph{Fibonacci's algorithm}, due to Leonardo Fibonacci, \textsc{a.d.} 1202.)
+    \begin{proof}
+        The process could be described as follows if denote $x$ as $\frac{m}{n}$:
+        \begin{align*}
+            x &= \frac{1}{\lceil 1/x \rceil} + y_1 &&\Rightarrow x>y_1\\
+            y_1 &= \frac{1}{\lceil 1/y_1 \rceil} + y_2 && \Rightarrow y_1>y_2\\
+            &\vdots\\
+            y_i &= \frac{1}{\lceil 1/y_i \rceil} + y_{i+1} && \Rightarrow y_i>y_{i+1}\\
+            &\vdots
+        \end{align*}
+        where right column holds because $0<x<1$ and
+        \begin{equation*}
+            y_{i+1} = y_i - \frac{1}{\lceil 1/y_i\rceil} \geq y_i - \frac{1}{1/y_i} = 0
+        \end{equation*}
+        With all numbers are positive, it is indicated that
+        \begin{equation*}
+            1>x>y_1>y_2>\cdots>y_i>y_{i+1}>\cdots\geq 0
+        \end{equation*}
+        % which deduce
+        % \begin{equation*}
+        %     1<\left\lceil \frac{1}{x}\right\rceil<
+        %     \left\lceil \frac{1}{y_1}\right\rceil<
+        %     \left\lceil \frac{1}{y_2}\right\rceil<
+        %     \cdots<
+        %     \left\lceil \frac{1}{y_i}\right\rceil<
+        %     \left\lceil \frac{1}{y_{i+1}}\right\rceil<
+        %     \cdots
+        % \end{equation*}
+        % The denomiter is in strictly increasing order, then \textbf{they are distinct}. 
+        They are in strictly decreasing order, which are distinct \emph{real numbers}.
+        However, this process must be terminated in some point, because
+        \begin{equation}\label{eq:y1}
+            y_1 = x - \frac{1}{\lceil 1/x \rceil} = \frac{x\lceil 1/x \rceil - 1}{\lceil 1/x \rceil} <\frac{x(1/x+1)-1}{\lceil 1/x \rceil} = \frac{x}{\lceil 1/x \rceil}
+        \end{equation}
+        Plug $x = \frac{m}{n}$ into Equation \eqref{eq:y1}
+        \begin{equation*}
+            0\leq y_1=\frac{m\lceil n/m \rceil - n}{n\lceil n/m \rceil}<\frac{m}{n\lceil n/m \rceil}
+        \end{equation*}
+        Denote $y_1=\frac{m_1}{n_1}$, then
+        \begin{equation*}
+            0\leq y_1 = \frac{m_1}{n_1} < \frac{m}{n_1} \Rightarrow m_1 < m
+        \end{equation*}
+        By the same process by applying $y_i = \frac{m_i}{n_i}$ and $y_{i+1}=\frac{m_{i+1}}{n_{i+1}}$, it is similar that 
+        \begin{equation*}
+            y_{i+1} < \frac{y_i}{\lceil 1/y_i \rceil} \Rightarrow m_{i+1} < m_i
+        \end{equation*}
+        then all \emph{integer} numerators for $y_i$ will be in an decreasing order.
+        \begin{equation}
+            0\leq \cdots < m_{i+1}<m_i < \cdots < m_2 < m_1 <m
+        \end{equation}
+        There are only finite \emph{integers} between $[0,m)$, then \textbf{the process must terminate at some point}.
+        % Then,
+        % \begin{align*}
+        %     y_2 &< \frac{y_1}{\lceil 1/y_1 \rceil} && \text{(Similarly)}\\
+        %     &\leq \frac{x/\lceil 1/x \rceil}{\lceil 1/x \rceil} = \frac{x}{\lceil 1/x \rceil^2} && \text{(By Equation \eqref{eq:y1})}
+        % \end{align*}
+
+        % \begin{align*}
+        %     y_1 &= x - \frac{1}{\lceil 1/x \rceil} \geq x - \frac{1}{1/x+1}=\frac{x}{1/x+1}\\
+        %     \frac{1}{y_1}&\leq \frac{1/x+1}{x}=\left(\frac{1}{x}\right)^2+\frac{1}{x}
+        % \end{align*}
+        % Then for any $i\geq 1$,
+        % \begin{equation*}
+        %     \left\lceil\frac{1}{y_i}\right\rceil<\left\lceil\frac{1}{y_{i+1}}\right\rceil\leq \left\lceil\left(\frac{1}{y_i}\right)^2+\frac{1}{y_i}\right\rceil
+        % \end{equation*}
+        % \begin{equation*}
+        %     x = \frac{1}{\lceil 1/x \rceil} + \frac{1}{\lceil 1/y_1 \rceil} + \cdots + \frac{1}{\lceil 1/y_i \rceil} +  \frac{1}{\lceil 1/y_{i+1} \rceil} + \cdots
+        % \end{equation*}
+        % indicates that
+        % \begin{equation*}
+        %     x>\frac{1}{\lceil 1/y_i \rceil}
+        % \end{equation*}
+        % because they are nonnegative numbers in the equation. Then, 
+        % \begin{align*}
+        %     \frac{1}{y_i}+1>\left\lceil \frac{1}{y_i} \right\rceil &>\frac{1}{x}\\
+
+        % \end{align*}
+    \end{proof}
 \end{problems}
 
 \noindent\textbf{Basics}
@@ -63,13 +189,250 @@
         \left\lceil\frac{2x+1}{2}\right\rceil - \left\lceil\frac{2x+1}{4}\right\rceil + \left\lfloor\frac{2x+1}{4}\right\rfloor
     \end{equation*} 
     is always either $\lfloor x \rfloor$ or $\lceil x \rceil$. In what circumstances does each case arise?
-    \item[11] Give details of the proof alluded to in the text,  that the open interval$(\alpha .. \alpha)$contains exactly $\lceil \beta\rceil-\lfloor \alpha\rfloor-1$ integers when $\alpha < \beta$.  Why doesthe case $\alpha=\beta$ have to be excluded in order to make the proof correct?
+    \begin{proof}
+        \begin{align}
+            \left\lceil\frac{2x+1}{2}\right\rceil - \left\lceil\frac{2x+1}{4}\right\rceil + \left\lfloor\frac{2x+1}{4}\right\rfloor &= \left\lceil\frac{2x+1}{2}\right\rceil - \left(\left\lceil\frac{2x+1}{4}\right\rceil - \left\lfloor\frac{2x+1}{4}\right\rfloor\right)\nonumber\\
+            &=\left\lceil\frac{2x+1}{2}\right\rceil - \left[ \frac{2x+1}{4}\not\in \mathbb{Z} \right]\nonumber\\
+            &=\left\{\begin{aligned}
+                &\left\lceil\frac{2x+1}{2}\right\rceil - 1, && \frac{2x+1}{4}\not\in \mathbb{Z}\\
+                &\left\lceil\frac{2x+1}{2}\right\rceil, && \frac{2x+1}{4}\in \mathbb{Z}
+            \end{aligned}\right.
+            %\nonumber
+            %\\&=\left\{\begin{aligned}
+            %    &\left\lceil\frac{2x-1}{2}\right\rceil, && \frac{2x+1}{4}\not\in \mathbb{Z}\\
+            %    &\left\lceil\frac{2x+1}{2}\right\rceil, && \frac{2x+1}{4}\in \mathbb{Z}
+            %$\end{aligned}\right.
+            \label{eq:100}
+        \end{align}
+        Then, the result is divided into two cases:
+        \begin{description}
+            \item[Case 1: $\frac{2x+1}{4}$ is not an integer.] The result could also be divided into two cases:
+            \begin{description}
+                \item[Case 1a: $\frac{2x+1}{2}$ is an integer.] Then assume the integer is $k$,\footnote{$\frac{2x+1}{4}=\frac{k}{2}\not\in\mathbb{Z}$, $k$ is an odd number.}
+                \begin{equation}\label{eq:101}
+                    \left\lceil\frac{2x+1}{2}\right\rceil - 1 =  \frac{2x+1}{2} - 1 = k - 1
+                \end{equation}  
+                while 
+                \begin{equation}\label{eq:102}
+                    x = \frac{2k-1}{2} = k - \frac{1}{2} \Rightarrow \lfloor x \rfloor = k - 1
+                \end{equation}
+                By combining Equation \eqref{eq:101} and Equation \eqref{eq:102},
+                \begin{equation}
+                    \left\lceil\frac{2x+1}{2}\right\rceil - 1 = \lfloor x \rfloor,\quad \frac{2x+1}{2}\in \mathbb{Z}
+                \end{equation}
+                \item[Case 1b: $\frac{2x+1}{2}$ is not an integer.] Then, at the moment, $\{x\}\neq \frac{1}{2}$, otherwise assume $x = \lfloor x \rfloor + \frac{1}{2}$
+                \begin{equation*}
+                    \frac{2x+1}{2} =  \frac{2\lfloor x \rfloor + 2}{2} = \lfloor x \rfloor + 1 \in \mathbb{Z}
+                \end{equation*}
+                which is contradictory.
+                \begin{align}
+                    \left\lceil\frac{2x+1}{2}\right\rceil - 1 &= \left\lfloor\frac{2x+1}{2}\right\rfloor \nonumber\\
+                    &=  \left\lfloor x+\frac{1}{2}\right\rfloor \nonumber \\
+                    &= \left\lfloor \lfloor x \rfloor + \{x\}+\frac{1}{2}\right\rfloor \nonumber \\
+                    &= \lfloor x \rfloor + \left\lfloor \{x\}+\frac{1}{2}\right\rfloor \nonumber \\
+                    &= \left\{ \begin{aligned}
+                        &\lfloor x \rfloor, &&0\leq \{x\}<\frac{1}{2}\\
+                        &\lceil x \rceil, &&\frac{1}{2}< \{x\}<1
+                    \end{aligned} \right.\label{eq:103}
+                \end{align} 
+                % Now, assume that assume that $m\in\mathbb{Z}$ satisfies
+                % \begin{equation*}
+                %     m<\frac{2x+1}{4}<m+1
+                % \end{equation*}  
+                % Then, 
+                % \begin{equation*}
+                %     2m<\frac{2x+1}{2} < 2m+2
+                % \end{equation*}
+                % But $\frac{2x+1}{2}$ is not an integer, then
+                % \begin{equation*}
+                %     2m<\left\lceil\frac{2x+1}{2}\right\rceil < 2m+2
+                % \end{equation*}
+                % there is only one integer in the interval, thus the result becomes
+                % \begin{equation}
+                %     \left\lceil\frac{2x+1}{2}\right\rceil - 1 = 2m
+                % \end{equation}
+
+            \end{description} 
+            % Then, assume that $m\in\mathbb{Z}$ satisfies
+            % \begin{equation}\label{eq:101}
+            %     m<\frac{2x+1}{4}<m+1
+            % \end{equation}  
+            % Then, 
+            % \begin{equation*}
+            %     2m<\left\lceil\frac{2x+1}{2}\right\rceil \leq 2m+2
+            % \end{equation*}
+            
+            % \begin{description}
+            %     \item[Case 1a: ] $\left\lceil\frac{2x+1}{2}\right\rceil =2m+1$, with 
+            %     \begin{align*}
+            %         2m < \frac{2x+1}{2} \leq 2m+1\\
+            %         2m - \frac{1}{2} < x \leq 2m+ \frac{1}{2}
+            %     \end{align*} 
+            % \end{description}
+
+            % Then, the result
+            % \begin{equation*}
+            %     2m-1<\left\lceil\frac{2x-1}{2}\right\rceil < 2m+1
+            % \end{equation*}
+            % there is only one integer in the interval, thus the result becomes
+            % \begin{equation}\label{eq:102}
+            %     \left\lceil\frac{2x-1}{2}\right\rceil = 2m
+            % \end{equation}
+            % Derives from Equation \eqref{eq:101},
+            % \begin{align*}
+            %     2m-\frac{1}{2}<x<2m+\frac{3}{2}\\
+            %     2m-1<\lfloor x \rfloor < 2m + 1\\
+            %     \lfloor x \rfloor = 2m
+            % \end{align*}
+            % in other word, the Equation \eqref{eq:102} becomes
+            % \begin{equation}
+            %     \left\lceil\frac{2x-1}{2}\right\rceil = 2m = \lfloor x \rfloor 
+            % \end{equation}
+            \item[Case 2: $\frac{2x+1}{4}$ is an integer.] Assume the integer is $n\in\mathbb{Z}$, thus
+            \begin{equation}\label{eq:104}
+                \left\lceil\frac{2x+1}{2}\right\rceil = \left\lceil 2\times \frac{2x+1}{4}\right\rceil = 2n
+            \end{equation} 
+            On the other hand, 
+            \begin{align*}
+                x &= \frac{4n-1}{2} \\
+                \lceil x \rceil &= \left\lceil 2n-\frac{1}{2} \right\rceil= 2n 
+            \end{align*}
+            Plug it into Equation \eqref{eq:104},
+            \begin{equation}\label{eq:105}
+                \left\lceil\frac{2x+1}{2}\right\rceil = \lceil x \rceil
+            \end{equation}
+            % However, this scenario could be included into Eqaution \eqref{eq:103}, because
+            % \begin{equation*}
+            %     \frac{2x+1}{4}=n \Rightarrow x = 2n - \frac{1}{2}\Rightarrow \{x\} = \frac{1}{2}
+            % \end{equation*}
+
+        \end{description}
+        %By combining Equation \eqref{eq:104} and Equation \eqref{eq:103} with Equation \eqref{eq:100}, the reuslt is 
+
+        As a matter of fact, $\frac{2x+1}{4}$ and $\frac{2x+1}{4}$ will lead to $\{x\}=\frac{1}{2}$. Thus,
+        \begin{equation*}
+            \left\lceil\frac{2x+1}{2}\right\rceil - \left\lceil\frac{2x+1}{4}\right\rceil + \left\lfloor\frac{2x+1}{4}\right\rfloor = \left\{\begin{aligned}
+                &\lfloor x\rfloor, && 0\leq \{x\}<\frac{1}{2},\\
+                &\lceil x\rceil, && \frac{1}{2}<\{x\}<1,\\
+                &\lceil x \rceil - \left[\frac{2x+1}{4}\not\in\mathbb{Z}\right], && \{x\} = \frac{1}{2}.
+            \end{aligned}\right.
+        \end{equation*}
+    \end{proof}
+
+    \item[11] Give details of the proof alluded to in the text,  that the open interval $(\alpha .. \beta)$ contains exactly $\lceil \beta\rceil-\lfloor \alpha\rfloor-1$ integers when $\alpha < \beta$.  Why does the case $\alpha=\beta$ have to be excluded in order to make the proof correct?
+   
+    \begin{proof}
+        For integer $n\in(\alpha .. \beta)$,
+
+        % \begin{equation*}
+        %     \alpha < n <\beta \Rightarrow \left.
+        %     \begin{aligned}
+        %         &\lceil \alpha \rceil < n <\lceil \beta \rceil \\
+        %         &\lfloor \alpha \rfloor < n <\lfloor \beta \rfloor
+        %     \end{aligned}\right.
+        % \end{equation*}
+        % Since $\lfloor \alpha \rfloor\leq \lceil \alpha \rceil$ and $\lceil \beta \rceil\geq \lfloor \beta \rfloor$, the full range for $n$ is found:
+        \begin{equation}\label{eq:111}
+            \lfloor \alpha \rfloor < n < \lceil \beta \rceil
+        \end{equation}
+        has to be the full range for $n$. \textbf{Prove by contradiction. }
+        Otherwise, 
+        \begin{equation}\label{eq:112}
+            \begin{split}
+                n \leq \lfloor \alpha \rfloor \leq \alpha \\
+                n \geq \lceil \beta \rceil \geq \beta
+            \end{split}
+        \end{equation}
+        which are contradictory with $\alpha < n<\beta$. Thus
+        \begin{equation*}
+            \alpha < n < \beta \Leftrightarrow \lfloor \alpha \rfloor < n < \lceil \beta \rceil
+        \end{equation*}
+        And the number of integers in the interval of Equation \eqref{eq:111} is 
+        \begin{equation*}
+            \# n = \lceil \beta \rceil - \lfloor \alpha \rfloor - 1
+        \end{equation*}
+        when $\alpha < \beta$. And when $\alpha=\beta$, Equation \eqref{eq:112} won't lead to contradiction with $\alpha<n<\beta$, since $\alpha \leq n\leq \alpha$ has intersection with $\alpha < n <\alpha$, i.e.,
+        \begin{equation*}
+            \alpha < n <\alpha \Rightarrow \alpha \leq n\leq \alpha
+        \end{equation*}
+    \end{proof}
     \item[12]Prove that
     \begin{equation*}
         \left\lceil \frac{n}{m}\right\rceil = \left\lfloor\frac{n+m-1}{m}\right\rfloor
     \end{equation*} 
-    for  all  integers $n$ and  all  positive  integers $m$.   [This  identity  gives  usanother way to convert ceilings to floors and vice versa, instead of using the reflective law (3.4).]
+    for  all  integers $n$ and  all  positive  integers $m$.   [This  identity  gives  us another way to convert ceilings to floors and vice versa, instead of using the reflective law (3.4).]
+    \begin{proof}
+        Split it into two scenarios.
+        \begin{description}
+            \item[Case 1: $\frac{n}{m}\in\mathbb{Z}$.] Then
+            \begin{equation*}
+                \left\lfloor\frac{n+m-1}{m}\right\rfloor = \left\lfloor\frac{n}{m}+\frac{m-1}{m}\right\rfloor =
+                \frac{n}{m} + \left\lfloor\frac{m-1}{m}\right\rfloor = \frac{n}{m} = \left\lceil \frac{n}{m}\right\rceil
+            \end{equation*}  
+            \item[Case 2: $\frac{n}{m}\not\in\mathbb{Z}$.] Assume 
+            \begin{equation*}
+                n=\left\lfloor\frac{n}{m}\right\rfloor m+r
+            \end{equation*}
+            where $1\leq r = n\mod m < m$. Then
+            \begin{equation*}
+                \left\lfloor \frac{n}{m}\right\rfloor = \left\lfloor \frac{n}{m}\right\rfloor + \left\lfloor \frac{r-1}{m}\right\rfloor = \left\lfloor \left\lfloor \frac{n}{m}\right\rfloor + \frac{r-1}{m}\right\rfloor = \left\lfloor \frac{\left\lfloor\frac{n}{m}\right\rfloor m+r-1}{m}\right\rfloor = \left\lfloor \frac{n-1}{m}\right\rfloor
+            \end{equation*} 
+            Thus,
+            \begin{equation*}
+                \left\lceil \frac{n}{m}\right\rceil = \left\lfloor \frac{n}{m}\right\rfloor + 1 = \left\lfloor \frac{n-1}{m}\right\rfloor + 1 = \left\lfloor \frac{n+m-1}{m}\right\rfloor
+            \end{equation*}
+        \end{description}
+    \end{proof}
     \item[13]  Let $\alpha$ and $\beta$ be positive real numbers.  Prove that Spec($\alpha$) and Spec($\beta$) partition the positive integers if and only if $\alpha$ and $\beta$ are irrational and $1/\alpha+1/\beta=1$.
+    \begin{proof}
+        % \begin{description}
+        %     \item[$\Leftarrow$]  
+        % \end{description}
+        The number of elements in Spec$(\alpha)$ that are $\leq n$, where $n\in\mathbb{Z}$:
+        \begin{align*}
+            N(\alpha,n) &= \sum_{k>0}[\lfloor k\alpha \rfloor \leq n]\\
+            &= \sum_{k>0}[\lfloor k\alpha \rfloor < n+1]\\
+            &= \sum_{k>0}[k\alpha < n+1] 
+            % && (\alpha\in \mathbb{R}\backslash \mathbb{Q})
+            \\
+            &=\sum_k[0<k<\frac{n+1}{\alpha}]\\
+            &=\left\lceil \frac{n+1}{\alpha}\right\rceil -\lfloor 0\rfloor - 1 && \text{(By Problem 11)}\\
+            &=\left\lceil \frac{n+1}{\alpha}\right\rceil- 1
+        \end{align*}
+        ``$\Leftarrow$'' for $\forall n > 0$:
+        \begin{align}
+            N(\alpha,n)+N(\beta, n) &= \left\lceil \frac{n+1}{\alpha}\right\rceil- 1 + \left\lceil \frac{n+1}{\beta}\right\rceil- 1\nonumber\\
+            &= \left\lfloor \frac{n+1}{\alpha}\right\rfloor + \left\lfloor \frac{n+1}{\beta}\right\rfloor \label{eq:131}\\
+            &= \frac{n+1}{\alpha} - \left\{ \frac{n+1}{\alpha}\right\} + \frac{n+1}{\beta} - \left\{ \frac{n+1}{\beta}\right\}\nonumber\\
+            &= (n+1)\left(\frac{1}{\alpha}+\frac{1}{\beta}\right) - \left(\left\{ \frac{n+1}{\alpha}\right\} + \left\{ \frac{n+1}{\beta}\right\}\right) \label{eq:132}\\
+            &= n+1 - 1 = n\nonumber
+        \end{align}
+        Equation \eqref{eq:131} holds because 
+        \begin{equation}\label{eq:133}
+            \alpha,\beta\in\mathbb{R}\backslash \mathbb{Q}\Rightarrow \not\exists n\in\mathbb{Z}:\alpha|n+1,\beta|n+1\Rightarrow \frac{n+1}{\alpha},\frac{n+1}{\beta}\not\in\mathbb{Z}
+        \end{equation}
+        Equation \eqref{eq:132} holds because of \eqref{eq:133} and 
+        \begin{equation}
+            (n+1)\left(\frac{1}{\alpha}+\frac{1}{\beta}\right) = n+1\in \mathbb{Z}
+        \end{equation}
+        The sum of fractional parts has to be 1.
+
+        ``$\Rightarrow$''
+        \textbf{Prove by contradiction.}
+        \begin{description}
+            \item[Case 1: $\alpha,\beta\in \mathbb{Q}$.] Suppose
+            \begin{equation*}
+                \alpha = \frac{m_1}{n_1}, \beta = \frac{m_2}{n_2}
+            \end{equation*}
+            where $m_1,n_1,m_2,n_2\in\mathbb{N}$ (because they are positive). Then the least common multiple lcm$(m_1,m_2)$ of $m_1$ and $m_2$ will exist in both Spec$(\alpha)$ and Spec$(\beta)$, which will make it not a division of integers.
+            \item[Case 2: $\frac{1}{\alpha} + \frac{1}{\beta}\neq 1$.] The coefficient of $n$ is $\frac{1}{\alpha} + \frac{1}{\beta}$ as is seen in \eqref{eq:132} where samll constants are neglected when $n$ is large whether or not Equation \eqref{eq:131} holds. Then the coefficient will not match and $N(\alpha,n)+N(\beta, n)$ will not be $n$ to be the partition of integers.
+            \item[Case 3: $\alpha\in \mathbb{Q}$ and $\beta\in \mathbb{R}\backslash\mathbb{Q}$.] Then 
+            \begin{equation*}
+                1\neq \frac{1}{\alpha} + \frac{1}{\beta} \in \mathbb{R}\backslash\mathbb{Q}
+            \end{equation*} 
+            which is the same as the previous case.
+        \end{description}
+    \end{proof} 
 \end{problems}
 
 \end{document}

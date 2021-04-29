@@ -1,0 +1,65 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+\usepackage{enumerate}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 9}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[1] What  is  the  smallest  positive  integer  that  has  exactly k divisors,  for $1\leq k\leq 6$?
+    \item[2] Prove that $\gcd (m, n)\cdot\text{lcm} (m, n)=m\cdot n$, and use this identity to express lcm($m, n$) in terms of lcm($n\bmod m, m$), when $n \bmod m\neq 0$. Hint: Use (4.12), (4.14), and (4.15).
+    \item[3] Let $\pi(x)$ be the number of primes not exceeding $x$.  Prove or disprove: $\pi(x) -\pi(x-1) =$ [$x$ is prime].
+    \item[4] What would happen if the Stern-Brocot construction started with the five fractions $\left(\frac{0}{1},\frac{1}{0},\frac{0}{-1},\frac{-1}{0},\frac{0}{1}\right)$ instead of with $\left(\frac{0}{1},\frac{1}{0}\right)$?
+    \item[5] Find simple formulas for $L^k$ and $R^k$, when $L$ and $R$ are the 2$\times$2 matrices of (4.33).
+    \item[6] What does `$a \equiv b\pmod 0$' mean?
+    \item[7] Ten people numbered 1 to 10 are lined up in a circle as in the Josephus problem,  and every mth person is executed.  (The value of $m$ may bemuch larger than 10.)  Prove that the first three people to go cannot be 10,$k$, and $k+1$(in this order), for any $k$.
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+    \item[14] Prove or disprove:
+    \begin{enumerate}[a]
+        \item gcd($km, kn$) =$k$gcd($m, n$)
+        \item lcm($km, kn$) =$k$lcm($m, n$)
+    \end{enumerate} 
+    \item[15] Does every prime occur as a factor of some Euclid number $e_n$?
+\end{problems}
+
+\end{document}
