@@ -1,0 +1,73 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+\usepackage{enumerate}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 10}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[8]The residue number system  ($x\bmod 3, x \bmod 5$) considered in the text hasthe curious property that 13 corresponds to (1, 3), which looks almost thesame.  Explain how to  nd all instances of such a coincidence, without calculating all fifteen pairs of residues.  In other words, find all solutions to the congruences
+    \begin{equation*}
+        10x+y\equiv x\pmod 3,\quad 10x+y \equiv y\pmod 5.    
+    \end{equation*}
+    Hint: Use the facts that $10u+6v\equiv u\pmod 3$ and $10u+6v\equiv v\pmod 5$
+    \item[9] Show that $(3^{77}-1)/2$ is odd and composite. Hint: What is $3^{77}\bmod 4$?
+    \item[10] Compute $\varphi(999)$.
+    \item[11] Find a function $\sigma(n)$ with the property that
+    \begin{equation*}
+        g(n)=\sum_{0\leq k\leq n}f(k) \Leftrightarrow f(n)=\sum_{0\leq k\leq n}\sigma (k)g(n-k).
+    \end{equation*} 
+    (This is analogous to the M\"obius function; see (4.56).)
+    \item[12]Simplify the formula $\sum_{d\backslash m}\sum_{k\backslash d}\mu(k)g(d/k)$.
+    \item[13] A positive integernis called \emph{squarefree} if it is not divisible by $m^2$ for any $m > 1$. Find a necessary and sufficient condition that $n$ is squarefree,
+    \begin{steps}
+        \item[a]in terms of the prime-exponent representation (4.11) of $n$;
+        \item[b]  in terms of $\mu(n)$.
+    \end{steps}
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+    \item[16]What is the sum of the reciprocals of the first $n$ Euclid numbers?
+    \item[17]Let $f_n$ be the ``Fermat number'' $2^{2^n}+1$.  Prove that $f_m \perp  f_n$ if $m < n$.
+    \item[18] Show that if $2n+1$ is prime then $n$ is a power of 2.
+\end{problems}
+
+\end{document}
