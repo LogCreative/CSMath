@@ -1,0 +1,164 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{qrcode}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 12}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+    \item[1] What is $11^4$?  Why is this number easy to compute, for a person who knows binomial coefficients?
+    \begin{solution}
+        \begin{equation*}
+            11^4 = (10+1)^4 = \sum_{k=0}^4 \binom{4}{k} 10^k\cdot 1^{4-k} = 14641
+        \end{equation*}
+    \end{solution} 
+    \item[2]For which value(s) of $k$ is $\binom{n}{k}$ a maximum, when $n$ is a given positive integer?  Prove your answer.
+    \begin{proof}
+        $k=\left\lfloor \frac{n}{2}\right\rfloor$ or $\left\lceil \frac{n}{2}\right\rceil$.
+
+        $k$ satisfies:
+        \begin{equation*}
+            \left\{
+            \begin{aligned}
+                \binom{n}{k-1}&\leq\binom{n}{k}\\
+                \binom{n}{k+1}&\leq\binom{n}{k}
+            \end{aligned}
+            \right.
+            \Rightarrow
+            \left\{
+                \begin{aligned}
+                    \frac{n!}{(k-1)!(n-k+1)!}&\leq\frac{n!}{k!(n-k)!}\\
+                    \frac{n!}{(k+1)!(n-k-1)!}&\leq\frac{n!}{k!(n-k)!}
+                \end{aligned}
+            \right.
+            \Rightarrow
+            \left\{
+                \begin{aligned}
+                    k&\leq n-k+1\\
+                    n-k&\leq k+1
+                \end{aligned}
+            \right.
+        \end{equation*}
+        In other word,
+        \begin{equation*}
+            \frac{n-1}{2}\leq k \leq \frac{n+1}{2}
+        \end{equation*}
+        If $n=2l(l\in\mathbb{N})$, then $\left\lfloor \frac{n}{2}\right\rfloor=\left\lceil \frac{n}{2}\right\rceil=\frac{n}{2}\in\left[\frac{n-1}{2},\frac{n+1}{2}\right]$; if $n=2l+1(l\in\mathbb{N})$, then $\frac{n-1}{2}=\left\lfloor \frac{n}{2}\right\rfloor$ and $\frac{n+1}{2}=\left\lceil \frac{n}{2}\right\rceil$.
+    \end{proof} 
+    \item[3]Prove the hexagon property,
+    \begin{equation*}
+        \binom{n-1}{k-1}\binom{n}{k+1}\binom{n+1}{k}=\binom{n-1}{k}\binom{n+1}{k+1}\binom{n}{k-1}
+    \end{equation*}
+    \begin{proof}
+        \begin{align*}
+            \binom{n-1}{k-1}\binom{n}{k+1}\binom{n+1}{k}&=\binom{n-1}{k}\binom{n+1}{k+1}\binom{n}{k-1}\\
+            \Leftarrow&\quad \frac{(n-1)!n!(n+1)!}{(k-1)!(n-k)!(k+1)!(n-k-1)!k!(n+1-k)!} \\&= \frac{(n-1)!n!(n+1)!}{k!(n-1-k)!(k+1)!(n-k)!(k-1)!(n-k+1)!}
+        \end{align*}
+        Two sides are same.
+    \end{proof}
+    \item[4]Evaluate $\binom{-1}{k}$ by negating (actually un-negating) its upper index.
+    \begin{solution}
+        \begin{equation*}
+            \binom{-1}{k} = \frac{(-1)^{\underline{k}}}{k!} = \frac{(-1)^k1^{\overline{k}}}{k!} = \frac{(-1)^k k^{\underline{k}}}{k!} = (-1)^k \binom{k}{k} = (-1)^k [k\geq 0]
+        \end{equation*}
+        or by upper negation,
+        \begin{equation*}
+            \binom{-1}{k} = (-1)^k \binom{k-(-1)-1}{k} = (-1)^k \binom{k}{k} = (-1)^k [k\geq 0]
+        \end{equation*}
+    \end{solution} 
+    \item[5]Let $p$ be prime. Show that$\binom{p}{k} \bmod{p}=0$ for $0 < k < p$.  What does this imply about the binomial coefficients $\binom{p-1}{k}$?
+    \begin{solution}
+        $\binom{p}{k} = \frac{p!}{k!(p-k)!} = p \cdot \frac{(p-1)!}{k!(p-k)!}$ because $p$ is prime and every term in $k!(p-k)!$ is smaller than $p$ so that no one can cancel $p$ where $0<k<p$. Thus, $\binom{p}{k},p\in\mathbb{N}\Rightarrow \frac{(p-1)!}{k!(p-k)!}\in\mathbb{N}\Rightarrow p\left|\binom{p}{k}\right.$.
+
+        Since $\binom{p}{k} = \binom{p-1}{k} + \binom{p-1}{k-1}$, 
+        % \begin{equation*}
+        %     \binom{p-1}{k} = (-1)^k \binom{k-(p-1)-1}{k} = (-1)^k \binom{k-p}{k}
+        % \end{equation*}
+        %TODO
+        then
+        \begin{equation*}
+            \binom{p-1}{k} \equiv -\binom{p-1}{k-1} \pmod{p}
+        \end{equation*}
+        and assume $A_k=\binom{p-1}{k}$, then
+        \begin{equation*}
+            A_k \equiv -A_{k-1} \pmod{p}
+        \end{equation*}
+        and $A_0=\binom{p-1}{0}=1 \pmod{p}$, so
+        \begin{equation*}
+            \binom{p-1}{k} =  A_k \equiv (-1)^k \pmod{p}
+        \end{equation*}
+    \end{solution} 
+    \item[6] Fix up the text's derivation in Problem 6, Section 5.2, by correctly applying symmetry.
+    \begin{solution}
+        \begin{equation*}
+            \frac{1}{n+1}\sum_k \binom{n+k}{k}\binom{n+1}{k+1}(-1)^k = \frac{1}{n+1}\sum_{k} \binom{n+k}{n}\binom{n+1}{k+1}(-1)^k 
+        \end{equation*}
+        is wrong. The correct one should be
+        \begin{equation*}
+            \frac{1}{n+1}\sum_k \binom{n+k}{k}\binom{n+1}{k+1}(-1)^k = \frac{1}{n+1}\sum_{k\geq 0} \binom{n+k}{n}\binom{n+1}{k+1}(-1)^k
+        \end{equation*}
+        because 
+        \begin{equation*}
+            \binom{n-1}{-1} = 0\quad \binom{n-1}{n}=\frac{(n-1)^{\underline{n}}}{n!} = [n=0]
+        \end{equation*}
+        which is cancelled and the conversion is not correct.
+        And the remaining result should be
+        \begin{align*}
+            \frac{1}{n+1}\sum_{k} \binom{n+k}{n}\binom{n+1}{k+1}(-1)^k &- \frac{1}{n+1}\binom{n-1}{n}\binom{n+1}{0}(-1)^{-1} \\
+            &= \frac{1}{n+1}\sum_{k} \binom{n+k}{n}\binom{n+1}{k+1}(-1)^k + [n=0] \\
+            &= [n=0]
+        \end{align*}
+        as the result desired.
+    \end{solution} 
+
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+    \item[13]Find relations between the superfactorial function $P_n=\prod^n_{k=1} k!$ of exercise 4.55, the hyperfactorial function $Q_n=\prod^n_{k=1} k^k$, and the product $R_n=\prod^n_{k=0}\binom{n}{k}$.
+    \begin{solution}
+        \begin{equation*}
+            R_n = \prod^n_{k=0}\binom{n}{k} = \prod^n_{k=0} \frac{n!}{k!(n-k)!} = \frac{n!^{n+1}}{P_n^2} = \frac{Q_n n(n-1)^2\cdots 1^n}{P_n^2} = \frac{Q_n P_n}{P_n^2} = \frac{Q_n}{P_n}
+        \end{equation*}
+    \end{solution} 
+\end{problems}
+
+\end{document}

@@ -1,0 +1,76 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+\usepackage{enumerate}
+\usepackage{qrcode}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 13}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+   \item[7]Is (5.34) true also when $k < 0$?
+   \item[8]Evaluate 
+   \begin{equation*}
+       \sum_k\binom{n}{k}(-1)^k(1-\frac{k}{n})^n
+   \end{equation*}
+   What is the approximate value of this sum, when $n$ is very large? Hint: The sum is $\Delta^n f(0)$ for some function $f$.
+   \item[9] Show that the generalized exponentials of (5.58) obey the law
+   \begin{equation*}
+        \mathcal{E}_t(z) =\mathcal{E}(tz)^{1/t},\text{if }t\neq 0,
+   \end{equation*}
+    where $\mathcal{E}(z)$ is an abbreviation for $\mathcal{E}_1(z)$.
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+   \item[14]Prove identity (5.25) by negating the upper index in Vandermonde's con-volution (5.22).  Then show that another negation yields (5.26).
+   \item[15]What is $\sum_k\binom{n}{k}^3(-1)^k$?Hint:See (5.29).
+   \item[16]Evaluate the sum
+   \begin{equation*}
+       \sum_k\binom{2a}{a+k}\binom{2b}{b+k}\binom{2c}{c+k}(-1)^k
+   \end{equation*}
+   when $a, b, c$ are nonnegative integers.
+   \item[17]Find a simple relation between $\binom{2n-1/2}{n}$ and $\binom{2n-1/2}{2n}$.
+   \item[18]Find an alternative form analogous to (5.35) for the product
+   \begin{equation*}
+       \binom{r}{k}\binom{r-1/3}{k}\binom{r-2/3}{k}
+   \end{equation*}.
+\end{problems}
+
+\end{document}

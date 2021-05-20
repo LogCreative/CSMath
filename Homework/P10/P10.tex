@@ -42,23 +42,136 @@
 \noindent\textbf{Warmups}
 
 \begin{problems}
-    \item[8]The residue number system  ($x\bmod 3, x \bmod 5$) considered in the text hasthe curious property that 13 corresponds to (1, 3), which looks almost thesame.  Explain how to  nd all instances of such a coincidence, without calculating all fifteen pairs of residues.  In other words, find all solutions to the congruences
+    \item[8]The residue number system  ($x\bmod 3, x \bmod 5$) considered in the text has the curious property that 13 corresponds to (1, 3), which looks almost the same.  Explain how to find all instances of such a coincidence, without calculating all fifteen pairs of residues.  In other words, find all solutions to the congruences
     \begin{equation*}
         10x+y\equiv x\pmod 3,\quad 10x+y \equiv y\pmod 5.    
     \end{equation*}
     Hint: Use the facts that $10u+6v\equiv u\pmod 3$ and $10u+6v\equiv v\pmod 5$
+    \begin{solution}
+        $10u+6v$ is a number that satisfies the congruences within the range of 0 to 15:
+        \begin{equation*}
+            10u+6v\equiv u \pmod 3, \quad 10u+6v\equiv 6v \equiv v \pmod 5
+        \end{equation*}
+        Then, it suffies to find the solution to
+        \begin{equation*}
+            10x+6y\equiv 10x+y \pmod{15}
+        \end{equation*}
+        In other word,
+        \begin{equation*}
+            5y\equiv 0 \pmod{15}
+        \end{equation*}
+        Thus,
+        \begin{equation*}
+            y\equiv 0\pmod{3} \text{ and } y\leq 3
+        \end{equation*}
+        All pairs satisfies
+        \begin{equation*}
+            \begin{cases}
+                x=0\text{ or }1\\
+                y=0\text{ or }3
+            \end{cases}
+        \end{equation*}
+        The full list of them: 0, 3, 10, 13.
+    \end{solution}
+
     \item[9] Show that $(3^{77}-1)/2$ is odd and composite. Hint: What is $3^{77}\bmod 4$?
+    \begin{proof}
+        \begin{align*}
+            3^{77} - 1&\equiv (-1)^{77} - 1 \pmod 4\\
+                &\equiv -1 - 1\pmod 4\\
+                &\equiv 2 \pmod 4
+        \end{align*}
+        Thus $3^{77}-1$ could be interpreted as $4k+2(k\in\mathbb{Z})$. And $\frac{3^{77}-1}{2}=2k+1(k\in\mathbb{Z})$, which is an odd number.
+
+        Because $3^{77}-1=(3^7)^{11}-1=(3^7-1)\left(\sum_{i=0}^{10} (3^{7})^i\right)$, 
+        \begin{align*}
+            3^7-1 &| 3^{77}-1 \\
+            \frac{3^7-1}{2} &\left| \frac{3^{77}-1}{2} \right. 
+        \end{align*}
+        Then, $(3^{77}-1)/2$ is composite.
+    \end{proof} 
     \item[10] Compute $\varphi(999)$.
+    \begin{solution}
+        \begin{equation*}
+            999= 3^3\times 37
+        \end{equation*}
+        According to Euler's theorem,
+        \begin{equation*}
+            \varphi(999) = 999 \times \left(1-\frac{1}{3}\right)\left(1-\frac{1}{37}\right)=648
+        \end{equation*}
+    \end{solution} 
     \item[11] Find a function $\sigma(n)$ with the property that
     \begin{equation*}
         g(n)=\sum_{0\leq k\leq n}f(k) \Leftrightarrow f(n)=\sum_{0\leq k\leq n}\sigma (k)g(n-k).
     \end{equation*} 
     (This is analogous to the M\"obius function; see (4.56).)
-    \item[12]Simplify the formula $\sum_{d\backslash m}\sum_{k\backslash d}\mu(k)g(d/k)$.
-    \item[13] A positive integernis called \emph{squarefree} if it is not divisible by $m^2$ for any $m > 1$. Find a necessary and sufficient condition that $n$ is squarefree,
+    \begin{solution}
+        $\sigma(n)$ is defined by the formula:
+        % \begin{equation*}
+        %     \prod_{d|m} \sigma(d) = [m=1]
+        % \end{equation*}
+        \begin{equation*}
+            \sigma(n) = \begin{cases}
+                1,&n=0\\
+                -1,&n=1\\
+                0,&n>1
+            \end{cases}
+        \end{equation*}
+        $\Rightarrow$: If $g(n)=\sum_{0\leq k\leq n}f(k)$,
+        \begin{align*}
+            \sum_{0\leq k\leq n}\sigma (k)g(n-k) &= \sum_{0\leq k\leq n}\sigma (k)\sum_{0\leq j \leq n-k}f(j) \\
+            &= \sum_{0\leq k\leq n}\sigma (k)\sum_{k\leq j \leq n}f(n-j) \\
+            &= \sum_{0\leq j \leq n}f(n-j) - \sum_{1\leq j \leq n}f(n-j) \\
+            &= f(n)
+        \end{align*}
+        $\Leftarrow$: If $f(n)=\sum_{0\leq k\leq n}\sigma (k)g(n-k)=g(n) - g(n-1)$,
+        \begin{align*}
+            \sum_{0\leq k\leq n}f(k) = g(n) - g(0) + f(0) = g(n)
+        \end{align*}
+        where the last equation is followed by 
+        \begin{equation*}
+            f(0) = \sigma(0)g(0) = g(0)
+        \end{equation*}
+    \end{solution}
+    \item[12]Simplify the formula $\sum_{d | m}\sum_{k | d}\mu(k)g(d/k)$.
+    \begin{solution}
+        \begin{align*}
+            \sum_{d | m}\sum_{k | d}\mu(k)g\left(\frac{d}{k}\right) &= \sum_{d | m}\left(\sum_{k | d} \mu\left(\frac{d}{k}\right)g(k)\right) & \text{(Inversion)}\\
+            % &= \sum_{d | m}\sum_{k | (m/d)} \mu\left(\frac{m}{kd}\right)g(k)
+            % &= \sum_{d|m}\sum_{k|(m/d)}\mu\left(\frac{m}{kd}\right)g(k)\\
+            &= \sum_{k|m}\sum_{l|(m/k)} \mu\left(\frac{kl}{k}\right)g(k) & \text{(Interchange)}\\
+            &= \sum_{k|m}\left(\sum_{l|(m/k)} \mu(l)g(k)\right) & \text{(associative)}\\
+            &=\sum_{k|m}g(k)\sum_{l|(m/k)} \mu(l) & \text{(distributive)}\\
+            &=\sum_{k|m}g(k)\left[\frac{m}{k}=1\right] & \text{(defination)}\\
+            &=g(m) & (\text{only }m=k)
+        \end{align*}
+    \end{solution} 
+    \item[13] A positive integer $n$ is called \emph{squarefree} if it is not divisible by $m^2$ for any $m > 1$. Find a necessary and sufficient condition that $n$ is squarefree,
     \begin{steps}
         \item[a]in terms of the prime-exponent representation (4.11) of $n$;
+        \begin{solution}
+            For the prime-exponent representation of $n$:
+            \begin{equation*}
+                n=\prod_{i=1}^k p_i^{n_i}
+            \end{equation*}
+            to be squarefree, due to every prime could only be divided by 1 and itself,
+            \begin{equation*}
+                0\leq n_i<2,\quad \forall i=1,\cdots,k
+            \end{equation*}
+        \end{solution} 
         \item[b]  in terms of $\mu(n)$.
+        \begin{solution}
+            \begin{equation*}
+                m\text{ is squarefree }\Leftrightarrow \mu(m)=0
+            \end{equation*}
+            which is followed by
+            \begin{equation*}
+                \mu(m) = \begin{cases}
+                    (-1)^k,&\text{ if }m=p_1p_2\cdots p_k \text{distinct primes},\\
+                    0,&\text{ if }p^2|m\text{ for some prime }p
+                \end{cases}
+            \end{equation*}
+        \end{solution}
     \end{steps}
 \end{problems}
 
@@ -66,8 +179,71 @@
 
 \begin{problems}
     \item[16]What is the sum of the reciprocals of the first $n$ Euclid numbers?
+    \begin{solution}
+        By calculating some first terms,
+        
+        \begin{tabular}{c|ccccc}
+            $i$ & 1 & 2 & 3 & 4 & $\cdots$ \\
+            \hline
+            $e_i$ & 2 & 3 & 7 & 43 & $\cdots$ \\
+            $\frac{1}{e_i}$ & $\frac{1}{2}$ & $\frac{1}{3}$ & $\frac{1}{7}$ & $\frac{1}{43}$ & $\cdots$ \\
+            $\sum_{k=1}^i \frac{1}{e_k}$ & $\frac{1}{2}$ & $\frac{5}{6}$ & $\frac{41}{42}$ & $\cdots$ & $\cdots$
+        \end{tabular}
+
+        The following hypothesis could be formed:
+        \begin{equation}\label{eq:ass}
+            \sum_{i=1}^n \frac{1}{e_i} = 1 - \frac{1}{e_{n+1}-1}
+        \end{equation}
+
+        \textbf{Prove by mathematical induction.} The basic steps have be validated by the previous context. And assuming Equation \eqref{eq:ass} is true, then
+        \begin{equation*}
+            \sum_{i=1}^{n+1} \frac{1}{e_i} = \sum_{i=1}^n \frac{1}{e_i} + \frac{1}{e_{n+1}} = 1 - \frac{1}{e_{n+1}-1} + \frac{1}{e_{n+1}} = 1 - \frac{1}{(e_{n+1}-1)e_{n+1}}
+        \end{equation*}
+        Due to 
+        \begin{equation*}
+            e_{n+2} = (e_{n+1}-1)e_{n+1} + 1
+        \end{equation*}
+        Thus,
+        \begin{equation*}
+            \sum_{i=1}^{n+1} \frac{1}{e_i} = 1 - \frac{1}{e_{n+2}-1}
+        \end{equation*}
+        As a result, Equation \eqref{eq:ass} is true for $\forall n \in \mathbb{N}_+$.
+    \end{solution} 
     \item[17]Let $f_n$ be the ``Fermat number'' $2^{2^n}+1$.  Prove that $f_m \perp  f_n$ if $m < n$.
-    \item[18] Show that if $2n+1$ is prime then $n$ is a power of 2.
+    \begin{proof}
+        Consider
+        \begin{align*}
+            f_n = 2^{2^n} + 1 = 2^{2^m\times 2^{n-m}} + 1 = (2^{2^m})^{2^{n-m}} + 1 &\equiv (-1)^{2^{n-m}} + 1 \pmod{f_m}\\
+            &\equiv 1 + 1 = 2 \pmod{f_m}
+        \end{align*}
+        Then, by Euclid's algorithm,
+        \begin{align*}
+            \gcd(f_n,f_m) = \gcd(f_m,2) = 1
+        \end{align*}
+        The last equation holds for $f_m$ is an odd number. And this follows:
+        \begin{equation*}
+            f_m \perp f_n,\quad \text{ if }m<n
+        \end{equation*}
+    \end{proof} 
+    \item[18] Show that if $2^n+1$ is prime then $n$ is a power of 2.
+    \begin{proof}
+        \textbf{Prove by contradiction.} If $n$ is not a power of 2, then assuming that
+        % \begin{equation*}
+        %     n = 2^m + l,\quad 0<l<2^m
+        % \end{equation*}
+        % Then, 
+        % \begin{equation*}
+        %     2^n + 1 = 2^{2^m+l}+1
+        % \end{equation*}
+        \begin{equation*}
+            n=qm
+        \end{equation*}
+        where $q>1$ is an odd number. Then,
+        \begin{equation*}
+            2^n + 1 = 2^{qm} + 1 = (2^m)^q + 1 = (2^m+1)\left(2^{(q-1)m}-2^{(q-2)m}+\cdots-2^m+1\right)
+        \end{equation*}
+        Thus, $2^m+1 | 2^n + 1$ and $2^m+1<2^n+1$ followed by $q>1$, indicates that $2^n+1$ is not prime. A contradiction follows that $n$ is a power of 2.
+    \end{proof}
 \end{problems}
 
 \end{document}
