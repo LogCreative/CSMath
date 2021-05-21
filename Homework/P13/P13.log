@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2020.10.17)  20 MAY 2021 16:29
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (MiKTeX 20.10) (preloaded format=pdflatex 2020.10.17)  21 MAY 2021 12:45
 entering extended mode
 **./P13.tex
 (P13.tex
@@ -476,8 +476,7 @@ File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
 \l__kernel_color_stack_int=\count315
 \l__pdf_internal_box=\box61
-)
-No file P13.aux.
+) (P13.aux)
 \openout1 = `P13.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 40.
@@ -558,6 +557,7 @@ LaTeX Font Info:    Checking defaults for C41/song/m/n on input line 40.
 LaTeX Font Info:    ... okay on input line 40.
 LaTeX Font Info:    Checking defaults for C62/song/m/n on input line 40.
 LaTeX Font Info:    ... okay on input line 40.
+
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
 *geometry* verbose mode - [ preamble ] result:
@@ -618,19 +618,44 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 41.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{C:/Users/lizil/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] (P13.aux) ) 
+{C:/Users/lizil/AppData/Local/MiKTeX/pdftex/config/pdftex.map}] [2]
+Overfull \hbox (7.1826pt too wide) detected at line 166
+[]
+ []
+
+[3] [4]
+Overfull \hbox (31.85657pt too wide) detected at line 238
+[] [][][]\OT1/cmr/m/n/12 (\OMS/cmsy/m/n/12  \OT1/cmr/m/n/12 1)[] = [] [][][](\OMS/cmsy/m/n/12  \OT1/cmr/m/n/12 1)[]
+ []
+
+
+Overfull \hbox (31.85657pt too wide) detected at line 243
+[] [][][]\OT1/cmr/m/n/12 (\OMS/cmsy/m/n/12  \OT1/cmr/m/n/12 1)[] = [] [][][](\OMS/cmsy/m/n/12  \OT1/cmr/m/n/12 1)[]
+ []
+
+
+Overfull \hbox (40.94424pt too wide) detected at line 248
+[]
+ []
+
+
+Overfull \hbox (23.27525pt too wide) detected at line 283
+[]
+ []
+
+[5] [6] (P13.aux) ) 
 Here is how much of TeX's memory you used:
- 16428 strings out of 480236
- 300613 string characters out of 2890433
- 561804 words of memory out of 3000000
- 32676 multiletter control sequences out of 15000+200000
+ 16431 strings out of 480236
+ 300685 string characters out of 2890433
+ 576803 words of memory out of 3000000
+ 32677 multiletter control sequences out of 15000+200000
  544785 words of font info for 67 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 96i,7n,99p,410b,225s stack positions out of 5000i,500n,10000p,200000b,50000s
-<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on P13.pdf (1 page, 108274 bytes).
+ 96i,10n,99p,410b,256s stack positions out of 5000i,500n,10000p,200000b,50000s
+<C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmex10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr6.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmsy8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
+Output written on P13.pdf (6 pages, 141416 bytes).
 PDF statistics:
- 49 PDF objects out of 1000 (max. 8388607)
+ 72 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
