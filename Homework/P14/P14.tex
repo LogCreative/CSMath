@@ -194,7 +194,11 @@
         Write down $G(z) =\sum_{n} g_n z^n$,
         \begin{align*}
             G(z) = \sum_{n} g_n z^n &= \sum_n \sum_{i=0}^{n-1} (n-i)g_iz^n + \sum_n [n=0] z^n\\
-            &= 1 + \sum_{i=1}^{n} iz^{i}G(z)\\
+            &= 1 + \sum_n \sum_{i=1}^n ig_{n-i}z^n\\
+            &= 1 + \sum_{i=1}^\infty \sum_n ig_{n-i}z^n\\
+            &= 1 + \sum_{i=1}^\infty \sum_n ig_nz^{n+i}\\
+            &= 1 + \sum_{i=1}^\infty iz^i\sum_n g_nz^n\\
+            &= 1 + \sum_{i=1}^{\infty} iz^{i}G(z)\\
             &= 1 + \frac{z}{(1-z)^2}G(z)\\
             G(z) &= \frac{1-2z+z^2}{1-3z+z^2} \\
             &= 1 + \frac{z}{1-3z+z^2} \\
@@ -202,22 +206,27 @@
         \end{align*}
         Theorem gives that
         \begin{equation*}
-            g_n = a_1 \beta_1^n + a_2 \beta_2^n
+            g_n = [n=0] + a_1 \beta_1^n + a_2 \beta_2^n
         \end{equation*}
         where
         \begin{equation*}
-            a_1 = \frac{-\beta_1 \frac{1}{\beta_1}}{1-(\beta_1+\beta_2)+2\beta_1\beta_2\frac{1}{\beta_1}} = -\frac{1}{2\beta_2-2}
+            a_1 = \frac{-\beta_1 \frac{1}{\beta_1}}{-3+2\frac{1}{\beta_1}} = \frac{-\beta_1}{-3\beta_1+2} = -\frac{1}{\sqrt{5}}
         \end{equation*}
         and 
         \begin{equation*}
-            a_2 = \frac{-\beta_2 \frac{1}{\beta_2}}{1-(\beta_1+\beta_2)+2\beta_1\beta_2\frac{1}{\beta_2}} = -\frac{1}{2\beta_1-2}
+            a_2 = \frac{-\beta_2 \frac{1}{\beta_2}}{-3+2\frac{1}{\beta_2}} = \frac{-\beta_2}{-3\beta_2+2}= \frac{1}{\sqrt{5}}
         \end{equation*}
         Thus,
         \begin{align*}
-            g_n &= -\frac{1}{2}\left(\frac{\beta_1^n}{\beta_2-1}+\frac{\beta_2^n}{\beta_1-1}\right)\\
-            &= \frac{1}{2}(\beta_1^n(\beta_1-1)+\beta_2^n(\beta_2-1))
+            g_n &= [n=0] + \frac{\beta_2^n-\beta_1^n}{\sqrt[]{5}}
         \end{align*}
         where $\beta_1=\frac{3+\sqrt{5}}{2},\beta_2=\frac{3-\sqrt{5}}{2}$.
+        Notice that $\beta_1 = \hat{\Phi}^2,\beta_2 = \Phi^2$, thus,
+        \begin{align*}
+            g_n &= [n=0] +\frac{\Phi^{2n}-\hat{\Phi}^{2n}}{\sqrt[]{5}} \\
+            &= [n=0] + F_{2n}
+        \end{align*}
+        where $F_n=\frac{\Phi^{n}-\hat{\Phi}^n}{\sqrt{5}}$ is the Fibonacci number.
     \end{solution}
 \end{problems}
 

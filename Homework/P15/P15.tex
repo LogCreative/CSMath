@@ -1,0 +1,128 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage{CJKutf8}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usepackage{subfigure}
+\usepackage{enumerate}
+
+% 边距
+\geometry{left=2.0cm,right=2.0cm,top=2.0cm,bottom=3.0cm}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{exercise}{Exercise}
+\newtheorem*{solution}{Solution}
+\newtheorem{definition}{Definition}
+\theoremstyle{definition}
+
+\makeatletter \renewenvironment{proof}[1][Proof] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+\makeatletter
+\renewenvironment{solution}[1][Solution] {\par\pushQED{\qed}\normalfont\topsep6\p@\@plus6\p@\relax\trivlist\item[\hskip\labelsep\bfseries#1\@addpunct{.}]\ignorespaces}{\popQED\endtrivlist\@endpefalse} \makeatother
+
+% 大题
+\newenvironment{problems}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 小题
+\newenvironment{steps}{\begin{list}{}{\renewcommand{\makelabel}[1]{\textbf{##1}\hfil}}}{\end{list}}
+
+% 标题
+\title{\small \underline{Mathematical Foundations of Computer Science}\\\Large Project 15}
+\author{Zilong Li\\\small Student ID: 518070910095}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\noindent\textbf{Warmups}
+
+\begin{problems}
+   \item[5]Find a generating function $S(z)$ such that
+   \begin{equation*}
+        [z^n]S(z) = \sum_k \binom{r}{k} \binom{r}{n-2k}
+   \end{equation*}
+   \begin{solution}
+      Let $F(z)=(1+z^2)^r$ and $G(z)=(1+z)^r$, then
+      \begin{equation*}
+         F(z)G(z) = \sum_{n}\sum_{k} \binom{r}{k} z^{2k} \binom{r}{n-2k} z^{n-2k} = \sum_{n}\sum_{k} \binom{r}{k}\binom{r}{n-2k} z^n
+      \end{equation*}
+      So that
+      \begin{equation*}
+         S(z) = F(z)G(z) = (1+z^2)^r (1+z)^r = (1+z+z^2+z^3)^r
+      \end{equation*}
+   \end{solution}
+\end{problems}
+
+\noindent\textbf{Basics}
+
+\begin{problems}
+   \item[8] What is $[z^n](\ln(1-z))^2/(1-z)^{m+1}$?
+   \begin{solution}
+      Let $F(z)=(\ln(1-z))^2$ and $G(z)=1/(1-z)^{m+1}$. Since 
+      \begin{equation*}
+         -\ln(1-z) = \ln \frac{1}{1-z} = \sum_{n\geq 1}\frac{z^n}{n}
+      \end{equation*}
+      Then,
+      \begin{align*}
+         [z^n](\ln(1-z))^2 &= [z^n](-\ln(1-z))(-\ln(1-z)) \\&= \sum_{k=1}^{n-1}\frac{1}{k}\frac{1}{n-k}= \frac{1}{n}\sum_{k=1}^{n-1}\left(\frac{1}{k}+\frac{1}{n-k}\right)\\ &= \frac{2}{n}H_{n-1}
+      \end{align*}
+      and
+      \begin{equation*}
+         [z^n]\frac{1}{(1-z)^{m+1}} = \binom{m+n}{m}
+      \end{equation*}
+      Then
+      \begin{equation*}
+         [z^n](\ln(1-z))^2/(1-z)^{m+1} = [z^n]F(z)G(z) =\sum_{l=1}^n  \frac{2}{l}\binom{m+n-l}{m}H_{l-1}
+      \end{equation*}
+      % \paragraph{Another way}
+      % \begin{align*}
+      %    \sum_{n\geq 0}\binom{m+n}{m} z^n = \frac{1}{(1-z)^{m+1}}
+      % \end{align*}
+   \end{solution} 
+   \item[9] Use the result of the previous exercise to evaluate $\sum_{k=0}^n H_k H_{n-k}$.
+   \begin{solution}
+      The generating function $H(z)$ is 
+      \begin{equation*}
+         H(z) = \frac{1}{1-z}\ln\frac{1}{1-z} = \sum_{n\geq 0} H_n z^n
+      \end{equation*}
+      Then the problem is the coefficent of $z^n$ for function $H^2(z)$
+      \begin{equation*}
+         \sum_{k=0}^n H_k H_{n-k} = [z^n] H^2(z) = [z^n] \frac{(\ln(1-z))^2}{(1-z)^2}
+      \end{equation*}
+      which is the result of the previous exercise when $m=1$.
+
+   \end{solution} 
+   \item[10]  Set $r=s= -1/2$ in identity (7.62) and then remove all occurrences of $1/2$ by using tricks like (5.36).  What amazing identity do you deduce?
+   \begin{equation*}
+      \sum_k \binom{r+k}{k}\binom{s+n-k}{n-k}(H_{r+k}-H_r) = \binom{r+s+n+1}{n}(H_{r+s+n+1}-H_{r+s+1})
+   \end{equation*}
+   \begin{solution}
+      Set $r=s=-\frac{1}{2}$,
+      \begin{equation*}
+         \sum_k \binom{k-1/2}{k}\binom{n-k-1/2}{n-k}(H_{k-1/2}-H_{-1/2}) = \binom{n}{n}(H_{n}-H_{0}) = H_n
+      \end{equation*}
+      Then, with the help of (5.36),
+      \begin{equation*}
+         \binom{k-1/2}{k}\binom{n-k-1/2}{n-k} = \frac{\binom{2k}{k}}{2^{2k}}\frac{\binom{2(n-k)}{n-k}}{2^{2(n-k)}} = \frac{\binom{2k}{k}\binom{2(n-k)}{n-k}}{2^{2n}}
+      \end{equation*}
+      Thus,
+      \begin{equation*}
+         \sum_k \binom{2k}{k}\binom{2n-2k}{n-k}(H_{k-1/2}-H_{-1/2}) = 2^{2n}H_n
+      \end{equation*}
+      And since
+      \begin{align*}
+         H_{k-1/2} - H_{-1/2} &= \frac{1}{k-\frac{1}{2}} + \frac{1}{k-\frac{1}{2}-1} + \cdots + \frac{1}{\frac{1}{2}} \\&= \frac{2}{2k-1}+\frac{2}{2k-3}+\cdots+\frac{2}{1} \\&= \frac{2}{2k} + \frac{2}{2k-1} + \frac{2}{2k-2} + \frac{2}{2k-3} + \cdots + \frac{2}{2} + \frac{2}{1} - \left(\frac{2}{2k}+\frac{2}{2k-2} + \cdots + \frac{2}{2}\right) \\
+         &= 2H_{2k} - H_k
+      \end{align*}
+      \begin{equation*}
+         \sum_k \binom{2k}{k}\binom{2n-2k}{n-k}(2H_{2k} - H_k) = 2^{2n}H_n
+      \end{equation*}
+   \end{solution}
+\end{problems}
+
+\end{document}
